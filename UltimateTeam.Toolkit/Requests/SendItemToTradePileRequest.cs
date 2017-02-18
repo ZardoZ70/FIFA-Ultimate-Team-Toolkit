@@ -26,7 +26,11 @@ namespace UltimateTeam.Toolkit.Requests
             }
 
             var uriString = Resources.FutHome + Resources.ListItem;
-            var content = new StringContent($"{{\"itemData\":[{{\"id\":\"{_itemData.Id}\",\"pile\":\"trade\"}}]}}");
+            if (_itemData.ItemType == null || !_itemData.ItemType.Equals("player"))
+            {
+                uriString += "/resource";
+            }
+            var content = new StringContent($"{{\"itemData\":[{{\"id\":{_itemData.Id},\"pile\":\"trade\"}}]}}");
             Task<HttpResponseMessage> tradepileResponseMessageTask;
 
             if (AppVersion == AppVersion.WebApp)
